@@ -17,4 +17,3 @@ Tools for fine-tuning a **single HydraGNN Graph Foundation Model (GFM)**
 - **Pretrained GFM models**: https://huggingface.co/mlupopa/HydraGNN_Predictive_GFM_2024  
 After installation, place your chosen checkpoint (e.g., `gfm_0.229.pk`) in the `checkpoints/` directory.
 
----
