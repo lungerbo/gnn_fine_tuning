@@ -116,7 +116,7 @@ Each script requires:
 - `--fraction`: Dataset fraction to use (1, 5, 10, 25, 50, or 100)
 - `--ckpt`: Path to the GFM checkpoint (e.g., `../checkpoints/gfm_0.229.pk`)
 - `--split_dir`: Directory containing the dataset splits
-- `--config`: HydraGNN configuration JSON file
+- `--config`: HydraGNN configuration JSON file, make one based on dataset and checkpoint used
 - `--label_stats`: JSON file with normalization statistics (`{"mean": ..., "std": ...}`)
 - `--seed`: Random seed (default: 0)
 
