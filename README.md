@@ -8,7 +8,7 @@ Tools for fine-tuning a **single HydraGNN Graph Foundation Model (GFM)**
 ## Overview
 - Full and frozen-backbone fine-tuning modes  
 - Configurable heads and tasks  
-- Data preprocessing + evaluation (MAE, RMSE, R², UMAP, noise tests)
+
 
 ---
 
