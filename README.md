@@ -50,6 +50,7 @@ This repository provides scripts for fine-tuning Graph Foundation Models (GFM) u
 ```
 .
 ├── qm9/                          # QM9 dataset scripts
+│   ├── split_and_save_qm9.py     # Create train/val/test splits
 │   ├── train_qm9_scratch.py      # Train from scratch (no pretrained model)
 │   ├── qm9_gfm_finetune.py       # Full fine-tuning (backbone + head)
 │   ├── qm9_gfm_reuse_head.py     # Frozen backbone, train existing head
@@ -61,6 +62,7 @@ This repository provides scripts for fine-tuning Graph Foundation Models (GFM) u
 │   ├── md17_gfm_reuse_head.py    # Frozen backbone, train existing head
 │   └── md17_gfm_head_scratch.py  # Frozen backbone, new head
 └── transition1x/                 # Transition1x dataset scripts
+    ├── split_and_save_transition1x.py  # Create train/val/test splits
     ├── train_transition1x_scratch.py
     ├── transition1x_gfm_finetune.py
     ├── transition1x_gfm_reuse_head.py
@@ -71,25 +73,42 @@ This repository provides scripts for fine-tuning Graph Foundation Models (GFM) u
 
 ## Usage
 
-### Step 1: Prepare Dataset Splits (MD17 Example)
+### Step 1: Prepare Dataset Splits
 
-For MD17, first create the train/validation/test splits:
+For each dataset, first create the train/validation/test splits by running the corresponding script:
 
+#### QM9 Dataset
+```bash
+cd qm9
+python split_and_save_qm9.py
+```
+
+This creates a `qm9_splits/` directory with train/val/test splits and subsampled training sets.
+
+#### MD17 Dataset
 ```bash
 cd md17
 python split_and_save_md17.py
 ```
 
-This creates an `md17_splits/` directory with:
+This creates an `md17_splits/` directory with train/val/test splits and subsampled training sets.
+
+#### Transition1x Dataset
+```bash
+cd transition1x
+python split_and_save_transition1x.py
+```
+
+This creates a `transition1x_splits/` directory with train/val/test splits and subsampled training sets.
+
+**Common Output for All Datasets:**
 - `train_full.pt` (full 70% training split)
 - `train_100.pt`, `train_50.pt`, `train_25.pt`, `train_10.pt`, `train_5.pt`, `train_1.pt` (subsampled versions for data efficiency experiments; train_100.pt is identical to train_full.pt)
 - `val.pt` (15% validation set)
 - `test.pt` (15% test set)
 - `label_stats.json` (mean and standard deviation for normalization)
 
-**Note**: The split directories contain generated data and are excluded by `.gitignore`. You'll need to generate them locally by running the split script.
-
-For QM9 and Transition1x, you'll need pre-saved splits in a similar format.
+**Note**: The split directories contain generated data and are excluded by `.gitignore`. You'll need to generate them locally by running the appropriate split script.
 
 ### Step 2: Fine-tuning
 
