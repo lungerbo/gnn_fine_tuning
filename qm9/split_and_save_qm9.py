@@ -21,7 +21,7 @@ def qm9_pre_transform(data):
     """
     Preprocess QM9 data:
     - Node features: atomic number + 3D coordinates
-    - Target: HOMO-LUMO gap (index 10) normalized by number of atoms
+    - Target: free energy at 298.15K (G, index 10) normalized by number of atoms
     - Edges: radius graph with r=5.0 Angstroms
     - Edge attributes: edge lengths
     """
@@ -29,7 +29,7 @@ def qm9_pre_transform(data):
     pos = data.pos.float()
     data.x = torch.cat([atomic_number, pos], dim=1)
     
-    # Target: HOMO-LUMO gap (index 10), normalized by number of atoms
+    # Target: free energy at 298.15K (G, index 10), normalized by number of atoms
     data.y = (data.y[:, 10] / len(data.x)).view(1)
     
     # Create edges using radius graph
