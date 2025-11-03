@@ -43,6 +43,8 @@ checkpoints/
 logs/
 *.log
 runs/
+
+# Generated data splits (users must generate these locally)
 *_splits/
 
 # OS

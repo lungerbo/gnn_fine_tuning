@@ -80,12 +80,14 @@ cd md17
 python split_and_save_md17.py
 ```
 
-This creates:
-- `md17_splits/train_full.pt` and `train_100.pt` (both contain 100% training data)
-- `md17_splits/train_50.pt`, `train_25.pt`, `train_10.pt`, `train_5.pt`, `train_1.pt` (subsampled training sets)
-- `md17_splits/val.pt` (validation set)
-- `md17_splits/test.pt` (test set)
-- Label statistics for normalization
+This creates an `md17_splits/` directory with:
+- `train_full.pt` (full 70% training split)
+- `train_100.pt`, `train_50.pt`, `train_25.pt`, `train_10.pt`, `train_5.pt`, `train_1.pt` (subsampled versions for data efficiency experiments; train_100.pt is identical to train_full.pt)
+- `val.pt` (15% validation set)
+- `test.pt` (15% test set)
+- `label_stats.json` (mean and standard deviation for normalization)
+
+**Note**: The split directories contain generated data and are excluded by `.gitignore`. You'll need to generate them locally by running the split script.
 
 For QM9 and Transition1x, you'll need pre-saved splits in a similar format.
 
