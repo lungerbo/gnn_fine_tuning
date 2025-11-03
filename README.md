@@ -48,7 +48,7 @@ This repository provides scripts for fine-tuning Graph Foundation Models (GFM) u
 ## Repository Structure
 
 ```
-gnn_fine_tuning/
+.
 ├── qm9/                          # QM9 dataset scripts
 │   ├── train_qm9_scratch.py      # Train from scratch (no pretrained model)
 │   ├── qm9_gfm_finetune.py       # Full fine-tuning (backbone + head)
@@ -81,8 +81,8 @@ python split_and_save_md17.py
 ```
 
 This creates:
-- `md17_splits/train_full.pt` (100% training data)
-- `md17_splits/train_100.pt`, `train_50.pt`, `train_25.pt`, etc. (subsampled training sets)
+- `md17_splits/train_full.pt` and `train_100.pt` (both contain 100% training data)
+- `md17_splits/train_50.pt`, `train_25.pt`, `train_10.pt`, `train_5.pt`, `train_1.pt` (subsampled training sets)
 - `md17_splits/val.pt` (validation set)
 - `md17_splits/test.pt` (test set)
 - Label statistics for normalization
