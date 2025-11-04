@@ -46,10 +46,13 @@ def normalize(ds, mean, std):
     return ds
 
 
-def freeze_backbone(model):
+def freeze_backbone_keep_head(model):
+    """Freeze all parameters except heads_NN"""
     for name, p in model.named_parameters():
-        if not any(k in name.lower() for k in ("head", "output", "classifier")):
-            p.requires_grad = False
+        p.requires_grad = ("heads_NN" in name)
+    total = sum(p.numel() for p in model.parameters())
+    trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    print(f"[MODEL] Params total={total:,}, trainable={trainable:,} ({100.0*trainable/max(1,total):.1f}%)")
 
 
 if __name__ == "__main__":
@@ -86,7 +89,7 @@ if __name__ == "__main__":
 
     model.load_state_dict(state, strict=False)
 
-    freeze_backbone(model)
+    freeze_backbone_keep_head(model)
     model = model.to(device)
 
     # quick forward sanity check
