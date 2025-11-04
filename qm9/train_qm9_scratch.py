@@ -40,6 +40,8 @@ def load_stats(path):
 def normalize(ds, mean, std):
     for d in ds:
         d.y = (d.y - mean) / std
+        if d.y.dim() == 1:
+            d.y = d.y.unsqueeze(1)
     return ds
 
 

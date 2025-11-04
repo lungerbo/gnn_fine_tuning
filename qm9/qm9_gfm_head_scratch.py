@@ -85,7 +85,7 @@ def freeze_backbone_keep_head(model):
         p.requires_grad = ("heads_NN" in name)
     total = sum(p.numel() for p in model.parameters())
     trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(f"[MODEL] Params total={total:,}, trainable={trainable:,} ({100.0*trainable/max(1,total):.1f}%)")
+    log(f"[MODEL] Params total={total:,}, trainable={trainable:,} ({100.0*trainable/max(1,total):.1f}%)")
 
 
 if __name__ == "__main__":
