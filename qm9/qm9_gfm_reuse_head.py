@@ -9,6 +9,7 @@ QM9 reuse-head fine-tuning with frozen GFM backbone.
 """
 import argparse
 import json
+import os
 import random
 import time
 
@@ -102,7 +103,7 @@ if __name__ == "__main__":
         lr=cfg["NeuralNetwork"]["Training"]["Optimizer"]["learning_rate"],
     )
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, "min", factor=0.5, patience=5)
-    tag = f"qm9_frozenhead_reuse_{args.fraction}_{os.path.basename(args.split_dir)}_seed{args.seed}" if (globals().get("os")) else f"qm9_frozenhead_reuse_{args.fraction}_{args.split_dir}_seed{args.seed}"
+    tag = f"qm9_gfm_reusehead_{args.fraction}_{os.path.basename(args.split_dir)}_seed{args.seed}"
     writer = SummaryWriter(log_dir=f"./logs/{tag}")
 
     import hydragnn.train
