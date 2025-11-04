@@ -138,7 +138,7 @@ if __name__ == "__main__":
     log(f"[CKPT] backbone_keys_loaded={len(backbone_state)} missing={len(missing)} unexpected={len(unexpected)}")
     bad = [k for k in missing if not k.startswith("heads_NN")]
     if bad:
-        raise RuntimeError(f"[ERROR] Backbone mismatch on: {bad[:8]} ...")
+        raise RuntimeError(f"[ERROR] Backbone mismatch on {len(bad)} keys: {bad[:8]}{' ...' if len(bad) > 8 else ''}")
 
     # freeze backbone, keep head trainable
     freeze_backbone_keep_head(model)
@@ -168,6 +168,6 @@ if __name__ == "__main__":
         model, optimizer, train_loader, val_loader, test_loader,
         writer, scheduler,
         cfg["NeuralNetwork"], tag, cfg["Verbosity"]["level"],
-        create_plots=cfg.get("Visualization", {}).get("create_plots", True),
+        create_plots=cfg.get("Visualization", {}).get("create_plots", False),
     )
     log(f"[DONE] Training completed in {time.time()-t0:.1f} sec")

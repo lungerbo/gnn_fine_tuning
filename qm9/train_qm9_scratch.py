@@ -86,6 +86,6 @@ if __name__ == "__main__":
         model, optimizer, train_loader, val_loader, test_loader,
         writer, scheduler,
         cfg["NeuralNetwork"], tag, cfg["Verbosity"]["level"],
-        create_plots=cfg.get("Visualization", {}).get("create_plots", True),
+        create_plots=cfg.get("Visualization", {}).get("create_plots", False),
     )
     log(f"[DONE] Training completed in {time.time()-t0:.1f} sec")
