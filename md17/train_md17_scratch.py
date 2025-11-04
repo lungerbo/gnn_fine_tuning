@@ -23,7 +23,7 @@ from hydragnn.models import create_model_config
 
 def parse_args():
     p = argparse.ArgumentParser()
-    p.add_argument("--fraction", required=True, help="1|3|5|10|25|50|100")
+    p.add_argument("--fraction", required=True, help="1|5|10|25|50|100")
     p.add_argument("--split_dir", required=True, help="dir with train_*.pt, val.pt, test.pt, label_stats.json")
     p.add_argument("--config", required=True, help="HydraGNN JSON config")
     p.add_argument("--label_stats", required=False, help="label_stats.json (if absent, compute on the fly)")
@@ -61,8 +61,7 @@ if __name__ == "__main__":
     log(f"[DDP] Rank {rank}/{world_size}")
 
     base = args.split_dir
-    train_file = f"train_{args.fraction}.pt" if args.fraction != "100" else "train_full.pt"
-    train_ds = torch.load(os.path.join(base, train_file))
+    train_ds = torch.load(os.path.join(base, f"train_{args.fraction}.pt"))
     val_ds = torch.load(os.path.join(base, "val.pt"))
     test_ds = torch.load(os.path.join(base, "test.pt"))
     log(f"Loaded datasets: {len(train_ds)} train | {len(val_ds)} val | {len(test_ds)} test")

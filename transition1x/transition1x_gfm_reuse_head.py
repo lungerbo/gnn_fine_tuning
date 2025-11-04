@@ -82,15 +82,11 @@ if __name__ == "__main__":
         log(f"[LOAD] Unexpected ckpt keys (ignored): {unexpected[:8]}{' ...' if len(unexpected)>8 else ''}")
 
     # Freeze backbone parameters; train heads only
-    frozen, trainable = 0, 0
     for name, p in model.named_parameters():
-        if ("backbone" in name) or ("egnn" in name.lower()) or ("graph_convs" in name.lower()):
-            p.requires_grad = False
-            frozen += p.numel()
-        else:
-            p.requires_grad = True
-            trainable += p.numel()
-    log(f"[SANITY] params frozen={frozen}, trainable={trainable}")
+        p.requires_grad = ("heads_NN" in name)
+    total = sum(p.numel() for p in model.parameters())
+    trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    log(f"[MODEL] Params total={total:,}, trainable={trainable:,} ({100.0*trainable/max(1,total):.1f}%)")
 
     model = get_distributed_model(model, cfg["Verbosity"]["level"])
     optimizer = torch.optim.AdamW(filter(lambda p: p.requires_grad, model.parameters()),

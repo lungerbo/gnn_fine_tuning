@@ -101,15 +101,11 @@ if __name__ == "__main__":
     log(f"[HEAD] head₀ reinitialized in-place: {reinit_layers} Linear layers reset; max |Δ|={max_delta:.3e}")
 
     # Freeze backbone; train head only
-    frozen, trainable = 0, 0
     for name, p in model.named_parameters():
-        if ("backbone" in name) or ("egnn" in name.lower()) or ("graph_convs" in name.lower()):
-            p.requires_grad = False
-            frozen += p.numel()
-        else:
-            p.requires_grad = True
-            trainable += p.numel()
-    log(f"[SANITY] params frozen={frozen}, trainable={trainable}")
+        p.requires_grad = ("heads_NN" in name)
+    total = sum(p.numel() for p in model.parameters())
+    trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    log(f"[MODEL] Params total={total:,}, trainable={trainable:,} ({100.0*trainable/max(1,total):.1f}%)")
 
     # DDP wrap and optimizer
     model = get_distributed_model(model, cfg["Verbosity"]["level"])
